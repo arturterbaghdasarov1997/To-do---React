@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Task from './Task';
 
-// Simple ID generator
 let idCounter = 0;
 const generateId = () => idCounter++;
 
@@ -18,31 +17,32 @@ class App extends Component {
   };
 
   addTask = () => {
-    if (this.state.newTask.trim()) {
-      const newTask = {
+    const { newTask, tasks } = this.state;
+    if (newTask.trim()) {
+      const task = {
         id: generateId(),
-        text: this.state.newTask
+        text: newTask
       };
-      this.setState((state) => ({
-        tasks: [...state.tasks, newTask],
+      this.setState({
+        tasks: [...tasks, task],
         newTask: ''
-      }));
+      });
     }
   };
 
   markAsDone = (id) => {
-    const taskToMove = this.state.tasks.find(task => task.id === id);
-    this.setState((state) => ({
-      tasks: state.tasks.filter(task => task.id !== id),
-      completedTasks: [...state.completedTasks, taskToMove]
-    }));
+    this.moveTask(id, 'tasks', 'completedTasks');
   };
 
   markAsToDo = (id) => {
-    const taskToMove = this.state.completedTasks.find(task => task.id === id);
+    this.moveTask(id, 'completedTasks', 'tasks');
+  };
+
+  moveTask = (id, from, to) => {
+    const taskToMove = this.state[from].find(task => task.id === id);
     this.setState((state) => ({
-      completedTasks: state.completedTasks.filter(task => task.id !== id),
-      tasks: [...state.tasks, taskToMove]
+      [from]: state[from].filter(task => task.id !== id),
+      [to]: [...state[to], taskToMove]
     }));
   };
 
@@ -54,28 +54,25 @@ class App extends Component {
   };
 
   render() {
+    console.log("App render");
+    const { tasks, completedTasks, newTask } = this.state;
     return (
       <div className="app">
         <h1>To-Do List</h1>
         <div className="input-container">
-          <input
-            type="text"
-            value={this.state.newTask}
-            onChange={this.handleInputChange}
-            placeholder="Enter new task"
-          />
+          <input type="text" value={newTask} onChange={this.handleInputChange} placeholder="Enter new task" />
           <button onClick={this.addTask}>Add Task</button>
         </div>
         <div className="tasks-container">
           <div className="tasks-column">
             <h2>To-Do</h2>
-            {this.state.tasks.map((task) => (
+            {tasks.map((task) => (
               <Task key={task.id} id={task.id} text={task.text} onDone={() => this.markAsDone(task.id)} onDelete={() => this.deleteTask(task.id)} />
             ))}
           </div>
           <div className="tasks-column">
             <h2>Done</h2>
-            {this.state.completedTasks.map((task) => (
+            {completedTasks.map((task) => (
               <Task key={task.id} id={task.id} text={task.text} onToDo={() => this.markAsToDo(task.id)} onDelete={() => this.deleteTask(task.id)} completed />
             ))}
           </div>
