@@ -17,32 +17,31 @@ class App extends Component {
   };
 
   addTask = () => {
-    const { newTask, tasks } = this.state;
-    if (newTask.trim()) {
-      const task = {
+    if (this.state.newTask.trim()) {
+      const newTask = {
         id: generateId(),
-        text: newTask
+        text: this.state.newTask
       };
-      this.setState({
-        tasks: [...tasks, task],
+      this.setState((state) => ({
+        tasks: [...state.tasks, newTask],
         newTask: ''
-      });
+      }));
     }
   };
 
   markAsDone = (id) => {
-    this.moveTask(id, 'tasks', 'completedTasks');
+    const taskToMove = this.state.tasks.find(task => task.id === id);
+    this.setState((state) => ({
+      tasks: state.tasks.filter(task => task.id !== id),
+      completedTasks: [...state.completedTasks, taskToMove]
+    }));
   };
 
   markAsToDo = (id) => {
-    this.moveTask(id, 'completedTasks', 'tasks');
-  };
-
-  moveTask = (id, from, to) => {
-    const taskToMove = this.state[from].find(task => task.id === id);
+    const taskToMove = this.state.completedTasks.find(task => task.id === id);
     this.setState((state) => ({
-      [from]: state[from].filter(task => task.id !== id),
-      [to]: [...state[to], taskToMove]
+      completedTasks: state.completedTasks.filter(task => task.id !== id),
+      tasks: [...state.tasks, taskToMove]
     }));
   };
 
@@ -53,26 +52,33 @@ class App extends Component {
     }));
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextState.tasks !== this.state.tasks ||
+      nextState.completedTasks !== this.state.completedTasks ||
+      nextState.newTask !== this.state.newTask
+    );
+  }
+
   render() {
     console.log("App render");
-    const { tasks, completedTasks, newTask } = this.state;
     return (
       <div className="app">
         <h1>To-Do List</h1>
         <div className="input-container">
-          <input type="text" value={newTask} onChange={this.handleInputChange} placeholder="Enter new task" />
+          <input type="text" value={this.state.newTask} onChange={this.handleInputChange} placeholder="Enter new task" />
           <button onClick={this.addTask}>Add Task</button>
         </div>
         <div className="tasks-container">
           <div className="tasks-column">
             <h2>To-Do</h2>
-            {tasks.map((task) => (
+            {this.state.tasks.map((task) => (
               <Task key={task.id} id={task.id} text={task.text} onDone={() => this.markAsDone(task.id)} onDelete={() => this.deleteTask(task.id)} />
             ))}
           </div>
           <div className="tasks-column">
             <h2>Done</h2>
-            {completedTasks.map((task) => (
+            {this.state.completedTasks.map((task) => (
               <Task key={task.id} id={task.id} text={task.text} onToDo={() => this.markAsToDo(task.id)} onDelete={() => this.deleteTask(task.id)} completed />
             ))}
           </div>
