@@ -1,37 +1,72 @@
+/* style.css */
+
 .app {
-  font-family: Arial, sans-serif;
-  text-align: center;
+  width: 800px;
+  max-width: 90%;
+  margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .input-container {
   margin-bottom: 20px;
 }
 
-.input-container input {
-  padding: 10px;
+.input-container input[type="text"] {
+  padding: 8px;
   font-size: 16px;
-  width: 300px;
+  width: 70%;
   margin-right: 10px;
 }
 
 .input-container button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
   cursor: pointer;
+}
+
+.input-container button:hover {
+  background-color: #45a049;
 }
 
 .tasks-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 25px;
 }
 
 .tasks-column {
-  width: 45%;
-  border: 1px solid grey 0,5;
-  border-radius: 15px;
+  flex: 1;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
 }
 
 .tasks-column h2 {
-  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+.done-task {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.done-task .task-actions button {
+  background-color: #f44336;
+}
+
+.done-task .task-actions button:hover {
+  background-color: #e53935;
 }
