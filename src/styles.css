@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.task-manager {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.todo-column {
+  flex: 1;
+  padding: 10px;
+}
+
+.main-div {
+  width: 370px;
+  background-color: #ffff;
+  height: auto;
+  padding: 18px 15px;
+  margin-top: 25px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.header {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #df2205;
+}
+
+.header-name {
+  font-weight: 400;
+  color: #484848;
+}
+
+.line {
+  width: 1px;
+  height: 16px;
+  border: 1px solid #d4d4d4;
+}
+
+.number {
+  font-weight: 400;
+  color: #484848;
+  font-size: 20px;
+}
+
+.main {
+  margin-top: 13px;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-btn {
+  background-color: transparent;
+  border: none;
+  color: #d4d4d4;
+  font-size: 27px;
+  align-self: flex-start;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  transform: translateY(-10px);
+  transition: 1s;
+}
+
+.input-field {
+  height: 40px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.main-container {
+  max-width: 300px;
+  width: 90%;
+}
+
+.backlog-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.draggable-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: grab;
+}
+
+.drop-zone {
+  padding: 16px;
+  border: 2px dashed #aaa;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.drop-zone:hover {
+  background-color: #f0f0f0;
+}
